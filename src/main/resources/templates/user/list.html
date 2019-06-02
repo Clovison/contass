@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ToDo List</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+    <link href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>ToDo List</h1>
+    </div>
+
+    <div>
+        <a class="btn btn-primary" th:href="@{/todo/collaborator/register}">Novo perfil</a>
+    </div>
+
+    <hr/>
+  
+
+    <div th:if="${#lists.isEmpty(perfis)}">
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            0 músicas cadastradas!
+        </div>
+    </div>
+    
+    <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Nome do Perfil</th>
+            <th>E-mail</th>
+            <th></th>
+            
+        </tr>
+        </thead>
+        <tr th:each="perfil : ${perfis}">
+           <td> 
+             <span th:text="${perfil.descricao}"></span>
+             </td>
+              <td> 
+              <span th:text="${perfil.email}"></span>
+              </td>
+            <td> 
+            	
+			 <a class="btn btn-sm btn-danger" th:href="@{/todo/collaborator/${perfil.id}/remove}">Excluir</a>
+            </td>
+        </tr>
+    </table>
+
+    <hr/>
+    <a class="btn btn-light" th:href="@{/todo/collaborator/register}">Voltar</a>
+
+    <hr/>
+    <footer class="footer">
+        <p>&copy; 2018 Clovison</p>
+    </footer>
+
+</div>
+</body>
+</html>

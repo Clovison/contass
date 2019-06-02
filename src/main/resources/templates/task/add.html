@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Lista de Tarefas</title>
+     <link href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				 
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="navbar-toggler-icon"></span>
+				</button> <a class="navbar-brand" th:href="@{/home}">Home</a>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="navbar-nav ml-md-auto">
+					<li class="nav-item active">
+						<a class="nav-link" th:href="@{/contass/task/list}">Tarefas criadas<span class="sr-only">(current)</span></a>
+						
+						</li>
+						<li class="nav-item active">
+						<a class="btn btn-success btn-large" th:href="@{/contass/user/form}">Novo Usuário <span class="sr-only">(current)</span></a>
+					</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+<br />
+
+
+    
+  <div th:if="${mensagem != null}">
+            <div class="alert alert-info" role="alert">
+                <span th:text="${mensagem}">mensagem</span>
+            </div>
+        </div>
+
+
+
+
+<h1>Nova Tarefa</h1>
+   <form th:action="@{/contass/task/save}" th:method="post" th:object="${task}">
+      <br />
+        <div class="row" >
+           <input id="id"    th:if="${task != null}" type="hidden" th:field="*{id}"/>
+            <div class="form-group col-md-12">
+               
+                <input class="form-control" required="required" name="description"  id="description" th:field="*{description}" placeholder="Nome da Tarefa"/>
+                 <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                 <br />
+                 <input class="form-control"  type="date" required="required" name="date" id="date"   th:field="*{date}"   placeholder="Data" />
+                 <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
+                  <br />
+                 
+                 <select id="user" name="user"  th:field="*{user.id}" class="form-control" required="required">
+                      <option th:text="${user.name}"  th:if="${user != null}"></option>
+                          <option  th:if="${task.user == null}">Selecione um usuário</option>
+                       
+                        <option th:each="u : ${users}" th:text="${u.name}" th:value="${u.id}">...</option>
+                    </select>
+                    
+                 
+              
+            </div>
+        </div>
+        <div class="form-group" >
+            <button class="btn btn-sm  btn-primary" type="submit">Salvar</button>
+        </div>
+    </form>
+
+
+<br />
+    <hr/>
+   
+
+  
+    <footer class="footer">
+        <p>&copy; 2019 Lista de Tarefas</p>
+    </footer>
+</div>
+
+    <script src="/bootstrap/jquery/jquery-3.2.1.slim.min.js" ></script>
+<script src="/bootstrap/popper/popper.min.js" ></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

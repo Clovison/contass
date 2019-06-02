@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Tarefas</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link href="/bootstrap/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				 
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="navbar-toggler-icon"></span>
+				</button> <a class="navbar-brand" th:href="@{/home}">Home</a>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="navbar-nav ml-md-auto">
+						<li class="nav-item active">
+						<a class="nav-link" th:href="@{/contass/task/form}">Nova Tarefa<span class="sr-only">(current)</span></a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+<br />
+   <div th:if="${#lists.size(taskList ) == 0}">
+ <h5>Ops, não encontramos nenhuma tarefa.</h5>
+ </div>
+  <div th:if="${#lists.size(taskList ) >0}">
+    <div th:if="${mensagem != null}">
+            <div class="alert alert-info" role="alert">
+                <span th:text="${mensagem}">mensagem</span>
+            </div>
+        </div>
+  <h1>Lista de tarefas</h1>
+     <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Tarefa</th>
+            <th>Usuário</th>
+            <th>Data</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tr th:each="t : ${taskList}">
+           <td> 
+             <span th:text="${t.description}"></span>
+             </td>
+              <td> 
+          <span th:text="${t.user.name}"></span>
+              </td>
+                <td> 
+              <span th:text="${t.date}"></span>
+              </td>
+            <td> 
+			 <a class="btn btn-sm btn-info"  th:href="@{/contass/task/{taskId}/edit(taskId=${t.id})}"
+			 >Editar </a>
+			 <a class="btn btn-sm btn-danger" th:href="@{/contass/task/{taskId}/remove(taskId=${t.id})}" >Excluir </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<br />
+    <hr/>
+    <footer class="footer">
+        <p>&copy; 2019 Lista de Tarefas</p>
+    </footer>
+</div>
+    <script src="/bootstrap/jquery/jquery-3.2.1.slim.min.js" ></script>
+<script src="/bootstrap/popper/popper.min.js" ></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
